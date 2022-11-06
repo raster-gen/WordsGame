@@ -46,13 +46,16 @@ struct ContentView: View {
             } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button("Restart game"){
+                    startGame()
+                }
+            }
         }
     }
     
     func addNewWord(){
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        
         
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original")
@@ -73,6 +76,7 @@ struct ContentView: View {
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
+        
         newWord = ""
     }
     
@@ -85,6 +89,7 @@ struct ContentView: View {
                 let dataArray = dataString.components(separatedBy: "\n")
                 
                 rootWord = dataArray.randomElement() ?? "somethingWentWrong"
+                usedWords = [String]()
                 
                 return
             }
